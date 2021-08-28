@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import shortid from 'shortid';
+import initialContacts from 'Data/contacts.json';
 
-const itemsInitialState = { items: [] };
+// const itemsInitialState = { items: [] };
 const filterInitialState = '';
 
 const itemsSlice = createSlice({
   name: 'items',
-  initialState: itemsInitialState,
+  initialState: initialContacts,
   reducers: {
     addContact: {
       reducer: (state, { payload }) => {

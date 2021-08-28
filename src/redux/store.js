@@ -1,24 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
 import { items, filter } from 'redux/phonebook/phonebook-slices';
-
-const phonebookPersistConfig = {
-  key: 'contacts',
-  storage,
-  blacklist: ['filter'],
-};
 
 const contactsReducer = combineReducers({
   items,
@@ -27,17 +10,10 @@ const contactsReducer = combineReducers({
 
 const store = configureStore({
   reducer: {
-    contacts: persistReducer(phonebookPersistConfig, contactsReducer),
+    contacts: contactsReducer,
   },
   devTools: process.env.NODE_ENV === 'development',
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }).concat(logger),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
 });
 
-const persistor = persistStore(store);
-
-export { store, persistor };
+export { store };
