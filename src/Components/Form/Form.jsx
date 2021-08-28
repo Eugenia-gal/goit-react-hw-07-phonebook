@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import * as phonebookActions from 'redux/phonebook/phonebook-actions';
-// import PropTypes from 'prop-types';
+import { addContact } from 'redux/phonebook/phonebook-slices';
 import CustomForm from './Form.styled';
 
 export default function Form() {
@@ -27,7 +26,7 @@ export default function Form() {
   const handleSubmit = e => {
     e.preventDefault();
     const newContact = { name: name, number: number };
-    dispatch(phonebookActions.addContact(newContact));
+    dispatch(addContact(newContact));
     setName('');
     setNumber('');
   };
@@ -61,13 +60,3 @@ export default function Form() {
     </CustomForm>
   );
 }
-
-// ------------without Hooks -----------------
-// Form.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };
-// const mapDispatchToProps = dispatch => ({
-//   onSubmit: data => dispatch(phonebookActions.addContact(data)),
-// });
-
-// export default connect(null, mapDispatchToProps)(Form);

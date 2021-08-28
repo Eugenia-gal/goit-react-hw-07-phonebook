@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 import {
   persistStore,
   persistReducer,
@@ -10,14 +11,19 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import contactsReducer from 'redux/phonebook/phonebook-reducer';
 import logger from 'redux-logger';
+import { items, filter } from 'redux/phonebook/phonebook-slices';
 
 const phonebookPersistConfig = {
   key: 'contacts',
   storage,
   blacklist: ['filter'],
 };
+
+const contactsReducer = combineReducers({
+  items,
+  filter,
+});
 
 const store = configureStore({
   reducer: {
@@ -35,14 +41,3 @@ const store = configureStore({
 const persistor = persistStore(store);
 
 export { store, persistor };
-
-// ------------------without Redux Toolkit-----------------------
-//
-// import { createStore, combineReducers } from 'redux';
-// import { composeWithDevTools } from 'redux-devtools-extension';
-//
-// const rootReducer = combineReducers({
-//   contacts: contactsReducer,
-// });
-//
-// const store = createStore(rootReducer, composeWithDevTools());
