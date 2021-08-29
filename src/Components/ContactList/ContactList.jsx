@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts, deleteContact } from 'redux/phonebook/phonebook-slices';
+import { getContacts } from 'redux/phonebook/phonebook-slices';
 import {
   getVisibleContacts,
   getStatus,

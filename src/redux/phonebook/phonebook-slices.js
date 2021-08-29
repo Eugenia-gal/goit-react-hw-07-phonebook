@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-// import shortid from 'shortid';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-// import initialContacts from 'Data/contacts.json';
 
 const itemsInitialState = { items: [], status: null, error: null };
 const filterInitialState = '';
@@ -125,6 +123,5 @@ const filterSlice = createSlice({
 const contacts = contactsSlice.reducer;
 const filter = filterSlice.reducer;
 
-// export const { addContact, deleteContact } = contactsSlice.actions;
 export const { filterContacts } = filterSlice.actions;
 export { contacts, filter };
