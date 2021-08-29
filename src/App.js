@@ -1,4 +1,5 @@
 // import { useState, useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 import './App.css';
 import Container from 'Components/Container';
 import Form from 'Components/Form';
@@ -25,6 +26,7 @@ function App() {
       <h2>Contacts</h2>
       <Filter />
       <ContactList />
+      <Toaster />
     </Container>
   );
 }

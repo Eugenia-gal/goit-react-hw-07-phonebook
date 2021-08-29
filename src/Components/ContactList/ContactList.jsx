@@ -1,37 +1,39 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/phonebook/phonebook-slices';
-import { getVisibleContacts } from 'redux/phonebook/phonebook-selectors';
-import styled from '@emotion/styled/macro';
+import { getContacts, deleteContact } from 'redux/phonebook/phonebook-slices';
+import {
+  getVisibleContacts,
+  getStatus,
+  getError,
+} from 'redux/phonebook/phonebook-selectors';
+import Loader from 'react-loader-spinner';
 import CustomContactList from './ContactList.styled';
-
-const ListContactEl = styled.li`
-  display: flex;
-  justify-content: space-between;
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
-`;
+import ContactItem from 'Components/ContactItem/ContactItem';
 
 export default function ContactList() {
   const contacts = useSelector(getVisibleContacts);
+  const status = useSelector(getStatus);
+  const error = useSelector(getError);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getContacts());
+  }, [dispatch]);
 
   return (
     <CustomContactList>
-      {contacts.map(contact => (
-        <ListContactEl key={contact.id}>
-          <span>
-            {contact.name}: {contact.number}
-          </span>
-          <button
-            type="button"
-            onClick={() => dispatch(deleteContact(contact.id))}
-          >
-            Delete
-          </button>
-        </ListContactEl>
-      ))}
+      {status === 'loading' && <Loader color="#757575" />}
+      {status === 'error' && (
+        <p>
+          <b>Oopps...something went wrong: </b>
+          {error}
+        </p>
+      )}
+      {contacts &&
+        !error &&
+        contacts.map(contact => (
+          <ContactItem key={contact.id} contact={contact} />
+        ))}
     </CustomContactList>
   );
 }
